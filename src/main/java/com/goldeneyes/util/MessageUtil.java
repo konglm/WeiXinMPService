@@ -38,9 +38,6 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
   
 /** 
  * 消息工具类 
- *  
- * @author liufeng 
- * @date 2013-05-19 
  */  
 public class MessageUtil {  
   

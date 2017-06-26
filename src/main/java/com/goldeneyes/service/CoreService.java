@@ -58,7 +58,7 @@ public class CoreService {
             textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);  
             textMessage.setFuncFlag(0);  
             // 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义  
-            textMessage.setContent("欢迎访问<a href=\"http://blog.csdn.net/lyq8479\">柳峰的博客</a>!");  
+            textMessage.setContent("欢迎访问Tony的公众号!\n回复1：了解此公众号\n回复2：了解Tony");  
             // 将文本消息对象转换成xml字符串  
             respMessage = MessageUtil.textMessageToXml(textMessage);  
   
@@ -79,10 +79,10 @@ public class CoreService {
                 // 单图文消息  
                 if ("1".equals(content)) {  
                     Article article = new Article();  
-                    article.setTitle("微信公众帐号开发教程Java版");  
-                    article.setDescription("柳峰，80后，微信公众帐号开发经验4个月。为帮助初学者入门，特推出此系列教程，也希望借此机会认识更多同行！");  
-                    article.setPicUrl("http://0.xiaoqrobot.duapp.com/images/avatar_liufeng.jpg");  
-                    article.setUrl("http://blog.csdn.net/lyq8479");  
+                    article.setTitle("IT人Tony的公众号");  
+                    article.setDescription("IT人Tony！Tony Kong！");  
+                    article.setPicUrl("http://qn-kfpb.jiaobaowang.net/jbypc/pc/2153620170609154142.jpg");  
+                    article.setUrl("http://user.qzone.qq.com/149207005/blog/1213056822");  
                     articleList.add(article);  
                     // 设置图文消息个数  
                     newsMessage.setArticleCount(articleList.size());  
@@ -96,11 +96,11 @@ public class CoreService {
                     Article article = new Article();  
                     article.setTitle("微信公众帐号开发教程Java版");  
                     // 图文消息中可以使用QQ表情、符号表情  
-                    article.setDescription("柳峰，80后，" + emoji(0x1F6B9)  
+                    article.setDescription("孔孔，80后，" + emoji(0x1F6B9)  
                             + "，微信公众帐号开发经验4个月。为帮助初学者入门，特推出此系列连载教程，也希望借此机会认识更多同行！\n\n目前已推出教程共12篇，包括接口配置、消息封装、框架搭建、QQ表情发送、符号表情发送等。\n\n后期还计划推出一些实用功能的开发讲解，例如：天气预报、周边搜索、聊天功能等。");  
                     // 将图片置为空  
                     article.setPicUrl("");  
-                    article.setUrl("http://blog.csdn.net/lyq8479");  
+                    article.setUrl("http://note.youdao.com/noteshare?id=9fd9d03962da06b4ea4f331a76ad2db6&sub=B2C7B8983CD1480996F1894DDC5F3CAE");  
                     articleList.add(article);  
                     newsMessage.setArticleCount(articleList.size());  
                     newsMessage.setArticles(articleList);  
