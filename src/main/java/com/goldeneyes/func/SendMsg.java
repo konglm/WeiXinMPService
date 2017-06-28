@@ -54,6 +54,12 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
+/**
+ * 群发微信
+ * 无需上传到微信的服务器url，直接执行main函数即可
+ * @author Administrator
+ *
+ */
 public class SendMsg
 {
     public static final String GET_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";// 获取access

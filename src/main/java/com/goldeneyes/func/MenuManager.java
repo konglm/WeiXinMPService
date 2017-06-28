@@ -17,9 +17,16 @@ package com.goldeneyes.func;
 import com.goldeneyes.pojo.Button;  
 import com.goldeneyes.pojo.CommonButton;  
 import com.goldeneyes.pojo.ComplexButton;  
-import com.goldeneyes.pojo.Menu;  
+import com.goldeneyes.pojo.Menu;
+import com.goldeneyes.pojo.ViewButton;
 import com.goldeneyes.util.WeixinUtil;  
   
+/**
+ * 菜单创建方法
+ * 无需上传到微信的服务器url，直接执行main函数即可
+ * @author Administrator
+ *
+ */
 public class MenuManager {  
 	public static final String GET_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";// 获取access
 	public static final String APP_ID = "wx52e245a4d6342f42";
@@ -92,10 +99,10 @@ public class MenuManager {
         btn31.setType("click");  
         btn31.setKey("31");  
   
-        CommonButton btn32 = new CommonButton();  
-        btn32.setName("电影排行榜");  
-        btn32.setType("click");  
-        btn32.setKey("32");  
+        ViewButton btn32 = new ViewButton();  
+        btn32.setName("使用帮助");  
+        btn32.setType("view");  
+        btn32.setUrl("http://baidu.com"); 
   
         CommonButton btn33 = new CommonButton();  
         btn33.setName("幽默笑话");  
@@ -112,7 +119,8 @@ public class MenuManager {
   
         ComplexButton mainBtn3 = new ComplexButton();  
         mainBtn3.setName("更多体验");  
-        mainBtn3.setSub_button(new CommonButton[] { btn31, btn32, btn33 });  
+        mainBtn3.setSub_button(new Button[] { btn31, btn32, btn33 });  
+        
   
         /** 
          * 这是公众号xiaoqrobot目前的菜单结构，每个一级菜单都有二级菜单项<br> 
