@@ -399,18 +399,6 @@ public class SendMsg
         }
     }
     
-    public static String getToken_getTicket(String apiurl, String appid, String secret) throws Exception {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("grant_type", "client_credential");
-        params.put("appid", appid);
-        params.put("secret", secret);
-        String jstoken = HttpUtils.sendGet(
-        		apiurl, params);
-        JsonParser jsonparer = new JsonParser();// 初始化解析json格式的对象
-        String access_token = jsonparer.parse(jstoken).getAsJsonObject().get("access_token").getAsString(); // 获取到token并赋值保存
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"token为=============================="+access_token);
-        return access_token;
-    }
     
     /** 
      *  
