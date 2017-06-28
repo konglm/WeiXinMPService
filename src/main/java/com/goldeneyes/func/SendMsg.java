@@ -2,8 +2,8 @@
  *  Copyright (C) 2017山东金视野教育科技股份有限公司
  * 版权所有。 
  *
- * 文件名：
- * 文件功能描述：
+ * 文件名：SendMsg
+ * 文件功能描述：微信群发功能
  *
  * 
  * 创建标识：
@@ -15,7 +15,9 @@
 package com.goldeneyes.func;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +34,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.goldeneyes.util.HttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 
 public class SendMsg
 {
@@ -113,73 +119,73 @@ public class SendMsg
 
     public static void main(String[] args) throws Exception
     {
-        String accessToken = getToken(GET_TOKEN_URL, APP_ID, SECRET);// 获取token在微信接口之一中获取
-        if (accessToken != null)// token成功获取
-        {
-            System.out.println(accessToken);
-            File file = new File("e:" + File.separator + "damingh3u.jpg"); // 获取本地文件
-            String id = uploadImage(UPLOAD_IMAGE_URL, accessToken, "image",
-                    file);// java微信接口之三—上传多媒体文件 可获取
-            if (id != null)
-            {
-                // 构造数据
-                Map map = new HashMap();
-                map.put("thumb_media_id", id);
-                map.put("author", "wxx");
-                map.put("title", "标题");
-                map.put("content", "测试fdsfdsfsdfssfdsfsdfsdfs");
-                map.put("digest", "digest");
-                map.put("show_cover_pic", "0");
-
-                Map map2 = new HashMap();
-                map2.put("thumb_media_id", id);
-                map2.put("author", "wxx");
-                map2.put("content_source_url", "www.google.com");
-                map2.put("title", "标题");
-                map2.put("content", "测试fdsfdsfsdfssfdsfsdfsdfs");
-                map2.put("digest", "digest");
-
-                Map map3 = new HashMap();
-                List<Map> list = new ArrayList<Map>();
-                list.add(map);
-                list.add(map2);
-                map3.put("articles", list);
-
-                Gson gson = new Gson();
-                String result = gson.toJson(map3);// 转换成json数据格式
-                String mediaId = uploadFodder(UPLOAD_FODDER_URL, accessToken,
-                        result);
-                if (mediaId != null)
-                {
-                    String ids = getGroups(GET_USER_GROUP, accessToken);// 在java微信接口之二—获取用户组
-                    if (ids != null)
-                    {
-                        String[] idarray = ids.split(",");// 用户组id数组
-                        for (String gid : idarray)
-                        {
-                            
-                            JsonObject jObj = new JsonObject();
-                            JsonObject filter = new JsonObject();
-                            filter.addProperty("group_id", gid);
-                            jObj.add("filter", filter);
- 
- 
-                            JsonObject mpnews = new JsonObject();
-                            mpnews.addProperty("media_id", mediaId);
-                            jObj.add("mpnews", mpnews);
- 
-                            jObj.addProperty("msgtype", "mpnews"); 
-                            System.out.println(jObj.toString());
-
-                            String result2 = sendMsg(SEND_MESSAGE_URL,
-                                    accessToken, jObj.toString());
-                            System.out.println(result2);
-                        }
-                    }
-                }
-
-            }
-        }
+        String accessToken = getAccessToken(GET_TOKEN_URL, APP_ID, SECRET);// 获取token在微信接口之一中获取
+//        if (accessToken != null)// token成功获取
+//        {
+//            System.out.println(accessToken);
+//            File file = new File("e:" + File.separator + "damingh3u.jpg"); // 获取本地文件
+//            String id = uploadImage(UPLOAD_IMAGE_URL, accessToken, "image",
+//                    file);// java微信接口之三—上传多媒体文件 可获取
+//            if (id != null)
+//            {
+//                // 构造数据
+//                Map map = new HashMap();
+//                map.put("thumb_media_id", id);
+//                map.put("author", "wxx");
+//                map.put("title", "标题");
+//                map.put("content", "测试fdsfdsfsdfssfdsfsdfsdfs");
+//                map.put("digest", "digest");
+//                map.put("show_cover_pic", "0");
+//
+//                Map map2 = new HashMap();
+//                map2.put("thumb_media_id", id);
+//                map2.put("author", "wxx");
+//                map2.put("content_source_url", "www.google.com");
+//                map2.put("title", "标题");
+//                map2.put("content", "测试fdsfdsfsdfssfdsfsdfsdfs");
+//                map2.put("digest", "digest");
+//
+//                Map map3 = new HashMap();
+//                List<Map> list = new ArrayList<Map>();
+//                list.add(map);
+//                list.add(map2);
+//                map3.put("articles", list);
+//
+//                Gson gson = new Gson();
+//                String result = gson.toJson(map3);// 转换成json数据格式
+//                String mediaId = uploadFodder(UPLOAD_FODDER_URL, accessToken,
+//                        result);
+//                if (mediaId != null)
+//                {
+//                    String ids = getGroups(GET_USER_GROUP, accessToken);// 在java微信接口之二—获取用户组
+//                    if (ids != null)
+//                    {
+//                        String[] idarray = ids.split(",");// 用户组id数组
+//                        for (String gid : idarray)
+//                        {
+//                            
+//                            JsonObject jObj = new JsonObject();
+//                            JsonObject filter = new JsonObject();
+//                            filter.addProperty("group_id", gid);
+//                            jObj.add("filter", filter);
+// 
+// 
+//                            JsonObject mpnews = new JsonObject();
+//                            mpnews.addProperty("media_id", mediaId);
+//                            jObj.add("mpnews", mpnews);
+// 
+//                            jObj.addProperty("msgtype", "mpnews"); 
+//                            System.out.println(jObj.toString());
+//
+//                            String result2 = sendMsg(SEND_MESSAGE_URL,
+//                                    accessToken, jObj.toString());
+//                            System.out.println(result2);
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
     }
     
     /**
@@ -392,4 +398,45 @@ public class SendMsg
             return result;
         }
     }
+    
+    public static String getToken_getTicket(String apiurl, String appid, String secret) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("grant_type", "client_credential");
+        params.put("appid", appid);
+        params.put("secret", secret);
+        String jstoken = HttpUtils.sendGet(
+        		apiurl, params);
+        JsonParser jsonparer = new JsonParser();// 初始化解析json格式的对象
+        String access_token = jsonparer.parse(jstoken).getAsJsonObject().get("access_token").getAsString(); // 获取到token并赋值保存
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+"token为=============================="+access_token);
+        return access_token;
+    }
+    
+    /** 
+     *  
+     * @Description: 获取access_token 
+     * @param appid  
+     * @param appsecret  
+     * @Title: getAccessToken 
+     * @return AccessToken     
+     */  
+    public static String getAccessToken(String apiurl, String appid, String secret) {  
+        String accessToken = null;  
+  
+        String requestUrl = String.format(
+                "%s?grant_type=client_credential&appid=%s&secret=%s", apiurl,
+                appid, secret); 
+        JSONObject jsonObject = HttpUtils.httpRequest(requestUrl, "GET", null);  
+        // 如果请求成功  
+        if (null != jsonObject) {  
+            try {  
+                accessToken = jsonObject.getString(
+        				"access_token");
+            } catch (JSONException e) {  
+
+            }  
+        }  
+        System.out.println(accessToken);;
+        return accessToken;  
+    }  
 }
