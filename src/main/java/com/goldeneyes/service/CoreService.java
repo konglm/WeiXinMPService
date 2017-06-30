@@ -210,43 +210,6 @@ public class CoreService {
                     newsMessage.setArticles(articleList);  
                     respMessage = MessageUtil.newsMessageToXml(newsMessage);  
                 }  
-                // 图片消息  
-                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {  
-                	respMessage = "您发送的是图片消息！";  
-                }  
-                // 语音消息  
-                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {  
-                	respMessage = "您发送的是语音消息！";  
-                }  
-                // 地理位置消息  
-                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {  
-                	respMessage = "您发送的是地理位置消息！";  
-                }  
-                // 链接消息  
-                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {  
-                	respMessage = "您发送的是链接消息！";  
-                }  
-                // 事件推送  
-                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {  
-                    // 事件类型  
-                    String eventType = requestMap.get("Event");  
-                    // 关注  
-                    if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {  
-                    	respMessage = "谢谢您的关注！";  
-                    }  
-                    // 取消关注  
-                    else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {  
-                        // TODO 取消订阅后用户不会再收到公众账号发送的消息，因此不需要回复  
-                    }  
-                    // 上报地理位置  
-                    else if (eventType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {  
-                        // TODO 处理上报地理位置事件  
-                    }  
-                    // 自定义菜单  
-                    else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {  
-                        // TODO 处理菜单点击事件  
-                    }  
-                } 
             }  
         } catch (Exception e) {  
             e.printStackTrace();  
