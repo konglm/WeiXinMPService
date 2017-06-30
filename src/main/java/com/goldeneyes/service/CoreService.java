@@ -272,15 +272,12 @@ public class CoreService {
     public static String getTranslateUsage() {  
         StringBuffer buffer = new StringBuffer();  
         // buffer.append(XiaoqUtil.emoji(0xe148)).append("Q译通使用指南").append("\n\n");  
-        buffer.append("Q译通为用户提供专业的多语言翻译服务，目前支持以下翻译方向：").append("\n");  
+        buffer.append("为用户提供专业的多语言翻译服务，目前支持以下翻译方向：").append("\n");  
         buffer.append("    中 -> 英").append("\n");  
         buffer.append("    英 -> 中").append("\n");  
-        buffer.append("    日 -> 中").append("\n\n");  
         buffer.append("使用示例：").append("\n");  
         buffer.append("    翻译我是中国人").append("\n");  
         buffer.append("    翻译dream").append("\n");  
-        buffer.append("    翻译さようなら").append("\n\n");  
-        buffer.append("回复“?”显示主菜单");  
         return buffer.toString();  
     }  
 }  
