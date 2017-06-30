@@ -76,8 +76,22 @@ public class CoreService {
                 newsMessage.setFuncFlag(0);  
   
                 List<Article> articleList = new ArrayList<Article>();  
+                if (content.startsWith("翻译")) {  
+                    String keyWord = content.replaceAll("^翻译", "").trim();  
+                    if ("".equals(keyWord)) {  
+                        textMessage.setContent(getTranslateUsage());  
+                    } else {  
+                        textMessage.setContent(BaiduTranslateService.translate(keyWord));  
+                    }  
+                    String respContent = textMessage.getContent();  
+  
+                    // 设置文本消息的内容  
+                    textMessage.setContent(respContent);  
+                    // 将文本消息对象转换成xml  
+                    respMessage = MessageUtil.textMessageToXml(textMessage);  
+                } 
                 // 单图文消息  
-                if ("1".equals(content)) {  
+                else if ("1".equals(content)) {  
                     Article article = new Article();  
                     article.setTitle("IT人Tony的公众号");  
                     article.setDescription("IT人Tony！Tony Kong！");  
@@ -196,6 +210,43 @@ public class CoreService {
                     newsMessage.setArticles(articleList);  
                     respMessage = MessageUtil.newsMessageToXml(newsMessage);  
                 }  
+                // 图片消息  
+                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {  
+                	respMessage = "您发送的是图片消息！";  
+                }  
+                // 语音消息  
+                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {  
+                	respMessage = "您发送的是语音消息！";  
+                }  
+                // 地理位置消息  
+                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {  
+                	respMessage = "您发送的是地理位置消息！";  
+                }  
+                // 链接消息  
+                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {  
+                	respMessage = "您发送的是链接消息！";  
+                }  
+                // 事件推送  
+                else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {  
+                    // 事件类型  
+                    String eventType = requestMap.get("Event");  
+                    // 关注  
+                    if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {  
+                    	respMessage = "谢谢您的关注！";  
+                    }  
+                    // 取消关注  
+                    else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {  
+                        // TODO 取消订阅后用户不会再收到公众账号发送的消息，因此不需要回复  
+                    }  
+                    // 上报地理位置  
+                    else if (eventType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {  
+                        // TODO 处理上报地理位置事件  
+                    }  
+                    // 自定义菜单  
+                    else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {  
+                        // TODO 处理菜单点击事件  
+                    }  
+                } 
             }  
         } catch (Exception e) {  
             e.printStackTrace();  
@@ -211,5 +262,25 @@ public class CoreService {
      */  
     public static String emoji(int hexEmoji) {  
         return String.valueOf(Character.toChars(hexEmoji));  
+    }  
+    
+    /** 
+     * 翻译使用指南 
+     *  
+     * @return 
+     */  
+    public static String getTranslateUsage() {  
+        StringBuffer buffer = new StringBuffer();  
+        // buffer.append(XiaoqUtil.emoji(0xe148)).append("Q译通使用指南").append("\n\n");  
+        buffer.append("Q译通为用户提供专业的多语言翻译服务，目前支持以下翻译方向：").append("\n");  
+        buffer.append("    中 -> 英").append("\n");  
+        buffer.append("    英 -> 中").append("\n");  
+        buffer.append("    日 -> 中").append("\n\n");  
+        buffer.append("使用示例：").append("\n");  
+        buffer.append("    翻译我是中国人").append("\n");  
+        buffer.append("    翻译dream").append("\n");  
+        buffer.append("    翻译さようなら").append("\n\n");  
+        buffer.append("回复“?”显示主菜单");  
+        return buffer.toString();  
     }  
 }  
